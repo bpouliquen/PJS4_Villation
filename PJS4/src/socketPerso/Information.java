@@ -7,11 +7,18 @@ package socketPerso;
  * @version 0.0.1
  */
 public class Information {
-
+	
+	private String message;
+	
 	/**
 	 * Constructeur
 	 */
-	public Information() {
-
+	public Information(String mesg){
+		this.message=mesg;
+	}
+	
+	@Override
+	public String toString(){
+		return message; 
 	}
 }

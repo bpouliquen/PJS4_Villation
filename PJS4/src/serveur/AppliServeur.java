@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import socketPerso.IOOStream;
+import socketPerso.IOOStreamLocal;
 import socketPerso.Information;
 
 /**
@@ -50,6 +51,11 @@ public class AppliServeur {
 	 *            String[]
 	 */
 	public static void main(String[] args) {
-
+		IOOStreamLocal ioos=new IOOStreamLocal();
+		Client c=new Client(ioos);
+		new Thread(c).start();
+		ioos.writeObject(new Information("Connexion au client local..."));
+		System.out.println(ioos.readObject());
+		System.out.println(ioos.readObject());
 	}
 }

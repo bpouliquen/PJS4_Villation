@@ -23,11 +23,11 @@ public class Client implements Runnable{
 	@Override
 	public void run() {
 		System.out.println(ioos.readObject());
-		ioos.writeObject(new Information("Je suis un client local"));
+		ioos.writeObject(new Information("Client local connecté."));
 		try {
 			Thread.sleep(5000);
 
-			ioos.writeObject(new Information("mais tg"));
+			ioos.writeObject(new Information("Déconnexion du client local."));
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

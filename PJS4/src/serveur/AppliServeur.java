@@ -54,7 +54,7 @@ public class AppliServeur {
 		IOOStreamLocal ioos=new IOOStreamLocal();
 		Client c=new Client(ioos);
 		new Thread(c).start();
-		ioos.writeObject(new Information("Connection au client local..."));
+		ioos.writeObject(new Information("Connexion au client local..."));
 		System.out.println(ioos.readObject());
 		System.out.println(ioos.readObject());
 	}

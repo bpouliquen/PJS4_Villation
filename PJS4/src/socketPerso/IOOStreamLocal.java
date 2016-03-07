@@ -75,6 +75,6 @@ public class IOOStreamLocal implements IOOStream {
 	@Override
 	public void close() {
 		// TODO Auto-generated method stub
-
+		
 	}
 }

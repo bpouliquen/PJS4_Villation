@@ -3,6 +3,7 @@ package serveur;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import socketPerso.IOOStream;
 import socketPerso.IOOStreamLocal;
@@ -24,7 +25,8 @@ public class AppliServeur {
 	 */
 	public AppliServeur() {
 		sock = new LinkedList<IOOStream>();
-		new ServeurEcoute(PORT, this.sock, nbJoueurs);
+		ServeurEcoute se = new ServeurEcoute(PORT, this.sock, nbJoueurs);
+		new Thread(se).start();
 	}
 
 	/**
@@ -51,11 +53,15 @@ public class AppliServeur {
 	 *            String[]
 	 */
 	public static void main(String[] args) {
-		IOOStreamLocal ioos=new IOOStreamLocal();
-		Client c=new Client(ioos);
+		IOOStreamLocal ioos = new IOOStreamLocal();
+		ClientLocal c = new ClientLocal(ioos);
 		new Thread(c).start();
-		ioos.writeObject(new Information("Connexion au client local..."));
-		System.out.println(ioos.readObject());
-		System.out.println(ioos.readObject());
+		ioos.writeObject(new Information("Connexion du client local..."));
+		System.out.println("Client local: " + ioos.readObject());
+		AppliServeur as = new AppliServeur();
+		as.sock.add(ioos);
+		Scanner s = new Scanner(System.in);
+		as.broadcast(new Information(s.nextLine()));
+		System.out.println("Client local: " + ioos.readObject());
 	}
 }

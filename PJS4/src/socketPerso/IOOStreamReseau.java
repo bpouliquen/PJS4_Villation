@@ -38,8 +38,8 @@ public class IOOStreamReseau implements IOOStream {
 
 	@Override
 	public Information readObject() throws ClassNotFoundException, IOException {
-		Object temp = ois.readObject();
-		return (Information) temp;
+		Information temp = (Information) ois.readObject();
+		return temp;
 	}
 
 	@Override

@@ -39,7 +39,6 @@ public class ServeurEcoute implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		new Thread(this).start();
 	}
 
 	/**
@@ -49,11 +48,14 @@ public class ServeurEcoute implements Runnable {
 	public void run() {
 		for (int i = this.attenteJoueurs; i > 0; i--) {
 			try {
-				System.out.println("En attente de " + this.attenteJoueurs + "joueurs...");
+				System.out.println("En attente de " + i + " joueurs...");
 				Socket temp = serveur.accept();
-				sock.add(new IOOStreamReseau(temp));
+				IOOStreamReseau ioos = new IOOStreamReseau(temp);
+				ioos.writeObject(new Information("Connecté au serveur."));
+				System.out.println("Client: " + ioos.readObject());
+				sock.add(ioos);
 
-			} catch (IOException e) {
+			} catch (IOException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

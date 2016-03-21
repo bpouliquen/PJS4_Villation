@@ -1,7 +1,6 @@
 package socketPerso;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Classe instanciant une mémoire tampon pour le joueur local

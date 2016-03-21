@@ -8,31 +8,38 @@ import socketPerso.*;
  * @author Octave M., Erwan P. Geoffrey A., Tristan H., John B., Brieuc P.
  * @version 0.0.1
  */
-public class ClientLocal implements Runnable{
+public class ClientLocal implements Runnable {
 
 	private IOOStreamLocal ioos;
-	
+
 	/**
 	 * Constructeur
-	 * @param temp IOOStreamLocal
+	 * 
+	 * @param temp
+	 *            IOOStreamLocal
 	 */
-	public ClientLocal(IOOStreamLocal temp){
-		ioos=new IOOStreamLocal(temp);
+	public ClientLocal(IOOStreamLocal temp) {
+		ioos = new IOOStreamLocal(temp);
 	}
-	
+
 	@Override
 	public void run() {
-		System.out.println(ioos.readObject());
-		ioos.writeObject(new InfoSortante("Client local connecté.", -1));
 		try {
-			//Thread.sleep(5000);
-			System.out.println("[Local]" + ioos.readObject());
-			ioos.writeObject(new InfoSortante("Déconnexion du client local.", -1));
-		}/* catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		finally {
+			System.out.println(ioos.readObject());
+			ioos.writeObject(new Information("Client local connecté."));
+
+			// Attente d'un message du serveur
+			InfoEntrante ie = (InfoEntrante) ioos.readObject();
+			
+			//Interactions avec le serveur
+			while (!ie.equals("exit")) {
+				System.out.println("[Serveur]: " + ie);
+				ie = (InfoEntrante) ioos.readObject();
+			}
+			
+			//Déconnexion
+			System.out.println("Déconnexion.");
+		} finally {
 			ioos.close();
 		}
 	}

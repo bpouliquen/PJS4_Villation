@@ -59,31 +59,42 @@ public class AppliServeur {
 		ClientLocal c = new ClientLocal(ioos);
 		new Thread(c).start();
 		ioos.writeObject(new Information("Connexion du client local..."));
-		System.out.println("Client local: " + ioos.readObject());
+		System.out.println("[Client local]: " + ioos.readObject());
 		AppliServeur as = new AppliServeur();
 		as.sock.add(ioos);
-		
-		//A partir de là, à modifier pour le traitement du GameEngine
-		
-		InfoSortante is = (InfoSortante) ioos.readObject();
-		{
-			InfoEntrante ie = new InfoEntrante(is.toString(), is.getEmplacement());
-			try {
-				switch(is.getEmplacement()) {
-					case 0: 
-						as.sock.get(0).writeObject(ie);
-						break;
-					case 1:
-						as.sock.get(1).writeObject(ie);
-						break;
-					case 2:
-						as.sock.get(2).writeObject(ie);
-						break;
-					default:
-						for(IOOStream i : as.sock)
-							i.writeObject(ie);
-						break;
+
+		// Interactions avec les clients
+		Scanner sc = new Scanner(System.in);
+		String msg = sc.nextLine();
+		try {
+			while (!sc.nextLine().equals("exit")) {
+				switch (msg) {
+				case ("0"):
+					as.sock.get(0).writeObject(new InfoEntrante(msg, 0));
+					break;
+				case ("1"):
+					as.sock.get(1).writeObject(new InfoEntrante(msg, 1));
+					break;
+				case ("2"):
+					as.sock.get(2).writeObject(new InfoEntrante(msg, 2));
+					break;
+				default:
+					as.toAll(msg);
+					break;
 				}
+			}
+			as.toAll("exit");
+			sc.close();
+		} catch (IOException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
+		}
+	}
+
+	private void toAll(String msg) {
+		for (IOOStream i : sock) {
+			try {
+				i.writeObject(new InfoEntrante(msg, -1));
 			} catch (IOException e) {
 				// TODO Bloc catch généré automatiquement
 				e.printStackTrace();

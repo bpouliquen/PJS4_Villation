@@ -28,13 +28,25 @@ public class Client implements Runnable {
 		// TODO Stub de la méthode généré automatiquement
 		try {
 			System.out.println(ioos.readObject());
-			ioos.writeObject(new Information("connecté."));
-			Thread.sleep(5000);
-			System.out.println("Message du serveur: "+ ioos.readObject());
+			ioos.writeObject(new InfoSortante("connecté.", -1));
+			
+			//Attente d'un message du serveur
+			InfoEntrante ie = (InfoEntrante) ioos.readObject();
+			
+			//Interactions avec le serveur
+			while (!ie.equals("exit")) {
+				System.out.println("[Serveur]: " + ie);
+				ie = (InfoEntrante) ioos.readObject();
+			}
+			
+			//Déconnexion du client
 			System.out.println("Déconnexion.");
-		} catch (ClassNotFoundException | IOException | InterruptedException e) {
+		} catch (ClassNotFoundException | IOException e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
+		}
+		finally {
+			ioos.close();
 		}
 	}
 }

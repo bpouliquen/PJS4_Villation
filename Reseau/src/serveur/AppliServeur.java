@@ -65,29 +65,6 @@ public class AppliServeur {
 		
 		//A partir de là, à modifier pour le traitement du GameEngine
 		
-		InfoSortante is = (InfoSortante) ioos.readObject();
-		{
-			InfoEntrante ie = new InfoEntrante(is.toString(), is.getEmplacement());
-			try {
-				switch(is.getEmplacement()) {
-					case 0: 
-						as.sock.get(0).writeObject(ie);
-						break;
-					case 1:
-						as.sock.get(1).writeObject(ie);
-						break;
-					case 2:
-						as.sock.get(2).writeObject(ie);
-						break;
-					default:
-						for(IOOStream i : as.sock)
-							i.writeObject(ie);
-						break;
-				}
-			} catch (IOException e) {
-				// TODO Bloc catch généré automatiquement
-				e.printStackTrace();
-			}
-		}
+		
 	}
 }

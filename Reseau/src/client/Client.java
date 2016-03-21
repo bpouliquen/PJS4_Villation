@@ -28,7 +28,7 @@ public class Client implements Runnable {
 		// TODO Stub de la méthode généré automatiquement
 		try {
 			System.out.println(ioos.readObject());
-			ioos.writeObject(new Information("connecté."));
+			ioos.writeObject(new InfoSortante("connecté.",-1));
 			Thread.sleep(5000);
 			System.out.println("Message du serveur: "+ ioos.readObject());
 			System.out.println("Déconnexion.");

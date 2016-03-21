@@ -10,5 +10,4 @@ public class Map implements IMap{
 	public Map(){
 		this.terrain=new ArrayList<Chunk>();
 	}
-	
 }

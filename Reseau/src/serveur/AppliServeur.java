@@ -67,7 +67,7 @@ public class AppliServeur {
 		Scanner sc = new Scanner(System.in);
 		String msg = sc.nextLine();
 		try {
-			while (!sc.nextLine().equals("exit")) {
+			while (!msg.equals("exit")) {
 				switch (msg) {
 				case ("0"):
 					as.sock.get(0).writeObject(new InfoEntrante(msg, 0));
@@ -82,6 +82,7 @@ public class AppliServeur {
 					as.toAll(msg);
 					break;
 				}
+				msg = sc.nextLine();
 			}
 			as.toAll("exit");
 			sc.close();

@@ -31,23 +31,6 @@ public class AppliServeur {
 	}
 
 	/**
-	 * Procédure transférant un packet à tous les clients
-	 * 
-	 * @param paquet
-	 *            Information
-	 */
-	public void broadcast(Information paquet) {
-		for (IOOStream s : sock) {
-			try {
-				s.writeObject(paquet);
-			} catch (IOException e) {
-				// TODO Bloc catch généré automatiquement
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
 	 * Procédure statique exécutable
 	 * 
 	 * @param args

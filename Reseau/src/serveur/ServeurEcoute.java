@@ -52,7 +52,7 @@ public class ServeurEcoute implements Runnable {
 				Socket temp = serveur.accept();
 				IOOStreamReseau ioos = new IOOStreamReseau(temp);
 				ioos.writeObject(new Information("Connecté au serveur."));
-				System.out.println("Client: " + ioos.readObject());
+				System.out.println("[Client]: " + ioos.readObject());
 				sock.add(ioos);
 
 			} catch (IOException | ClassNotFoundException e) {

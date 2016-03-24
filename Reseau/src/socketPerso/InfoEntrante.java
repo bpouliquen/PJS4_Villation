@@ -9,6 +9,9 @@ public class InfoEntrante extends Information {
 		this.emplacement = emplacement;
 		// TODO Stub du constructeur généré automatiquement
 	}
+	public int getEmplacement() {
+		return emplacement;
+	}
 
 	
 }

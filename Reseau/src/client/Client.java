@@ -28,14 +28,16 @@ public class Client implements Runnable {
 		// TODO Stub de la méthode généré automatiquement
 		try {
 			System.out.println(ioos.readObject());
-			ioos.writeObject(new InfoSortante("connecté.", -1));
+			ioos.writeObject(new Information("connecté."));
 			
 			//Attente d'un message du serveur
 			InfoEntrante ie = (InfoEntrante) ioos.readObject();
 			
 			//Interactions avec le serveur
-			while (!ie.equals("exit")) {
+			while (!ie.toString().equals("end")) {
 				System.out.println("[Serveur]: " + ie);
+				if (ie.getEmplacement() >= 0)
+					ioos.writeObject(new Information("Ta gueule tu parles trop !"));
 				ie = (InfoEntrante) ioos.readObject();
 			}
 			

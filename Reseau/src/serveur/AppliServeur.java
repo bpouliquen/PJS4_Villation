@@ -8,7 +8,6 @@ import java.util.Scanner;
 import socketPerso.IOOStream;
 import socketPerso.IOOStreamLocal;
 import socketPerso.InfoEntrante;
-import socketPerso.InfoSortante;
 import socketPerso.Information;
 
 /**
@@ -67,34 +66,41 @@ public class AppliServeur {
 		Scanner sc = new Scanner(System.in);
 		String msg = sc.nextLine();
 		try {
-			while (!sc.nextLine().equals("exit")) {
+			while (!msg.equals("end")) {
 				switch (msg) {
 				case ("0"):
 					as.sock.get(0).writeObject(new InfoEntrante(msg, 0));
+					System.out.println("[Client]: " + as.sock.get(0).readObject());
 					break;
 				case ("1"):
 					as.sock.get(1).writeObject(new InfoEntrante(msg, 1));
+					System.out.println("[Client]: " + as.sock.get(1).readObject());
 					break;
 				case ("2"):
 					as.sock.get(2).writeObject(new InfoEntrante(msg, 2));
+					System.out.println("[Client]: " + as.sock.get(2).readObject());
 					break;
 				default:
-					as.toAll(msg);
+					as.toAll(new InfoEntrante(msg, -1));
 					break;
 				}
+				msg = sc.nextLine();
 			}
-			as.toAll("exit");
+			
+			//Déconnexion du serveur
+			as.toAll(new InfoEntrante("end", -1));
 			sc.close();
-		} catch (IOException e) {
+			System.out.println("Fermeture du serveur.");
+		} catch (IOException | ClassNotFoundException e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
 	}
 
-	private void toAll(String msg) {
+	private void toAll(InfoEntrante ie) {
 		for (IOOStream i : sock) {
 			try {
-				i.writeObject(new InfoEntrante(msg, -1));
+				i.writeObject(ie);
 			} catch (IOException e) {
 				// TODO Bloc catch généré automatiquement
 				e.printStackTrace();

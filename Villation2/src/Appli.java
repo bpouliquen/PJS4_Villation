@@ -16,6 +16,10 @@ public class Appli {
         Map.commande("0 create ville 1 24 40 Paris");
         Map.commande("0 create ville 2 20 36 Lyon");
         Map.commande("0 create ville 5 0 0 Tombouctou");
+        
+        Map.commande("1 create ville 7 24 40 mdr");
+        Map.commande("1 create ville 8 20 36 lol");
+        Map.commande("1 create ville 9 0 0 xptdr");
 
         Map.commande("0 create fighter 2 0 3 20 36");
         Map.commande("0 create fighter 1 0 4 24 40");

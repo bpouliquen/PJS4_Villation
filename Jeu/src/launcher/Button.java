@@ -47,15 +47,21 @@ public class Button extends JButton implements MouseListener{
 		switch (type)
 		{
 		  case "Creation":
+			  //Action bouton "créer"
+			  new CreerPartie();
 		    System.out.println("Créer partie");
 		    break;
 		  case "Rejoindre":
+			  //Action bouton "rejoindre"
+			  new RejoindrePartie();
 		    System.out.println("Rejoindre partie");
 		    break;
 		  case "Propos":
+			  //Action bouton "a propos"
 		    System.out.println("A propos");
 		    break;
 		  default:
+			  //Action bouton "quitter"
 			  System.exit(0);
 		}
 		

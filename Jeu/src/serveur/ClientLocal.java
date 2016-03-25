@@ -3,7 +3,6 @@ package serveur;
 import java.io.IOException;
 
 import ressources.IOOStreamLocal;
-import ressources.InfoEntrante;
 import ressources.Information;
 
 /**
@@ -34,21 +33,35 @@ public class ClientLocal implements Runnable {
 			System.out.println(ioos.readObject());
 			ioos.writeObject(new Information("Client local connecté."));
 
-			// Attente d'un message du serveur
-			InfoEntrante ie = (InfoEntrante) ioos.readObject();
+			while(true) {
+				// Attente d'un message du serveur
+				Information i = ioos.readObject();
 
-			// Interactions avec le serveur
-			while (!ie.toString().equals("end")) {
-				System.out.println("[Serveur]: " + ie);
-				if (ie.getEmplacement() >= 0)
-					ioos.writeObject(new Information("Ta gueule tu parles trop !"));
-				ie = (InfoEntrante) ioos.readObject();
-			}
-
-			// Déconnexion du client
-			System.out.println("Déconnexion.");
+				// Interactions avec le serveur
+				if(i.toString().equals("tour"))
+					this.tour();
+				else {
+					//Paquet d'informations du jeu à traiter
+				}
+			}			
 		} finally {
+			// Déconnexion du client
+			System.out.println("Déconnexion du client local.");
 			ioos.close();
+		}
+	}
+	
+	public void tour() {
+		try {
+			//Tour du joueur
+			System.out.println("C'est mon tour !");
+			Thread.sleep(5000);
+			
+			//Fin du tour
+			ioos.writeObject(new Information("fin"));
+		} catch (InterruptedException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
 		}
 	}
 }

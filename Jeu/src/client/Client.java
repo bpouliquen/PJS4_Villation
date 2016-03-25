@@ -3,8 +3,8 @@ package client;
 import java.io.IOException;
 import java.net.Socket;
 
+import map.Map;
 import ressources.IOOStreamReseau;
-import ressources.InfoEntrante;
 import ressources.Information;
 
 public class Client implements Runnable {
@@ -31,24 +31,30 @@ public class Client implements Runnable {
 			System.out.println(ioos.readObject());
 			ioos.writeObject(new Information("Connecté."));
 
-			// Attente d'un message du serveur
-			InfoEntrante ie = (InfoEntrante) ioos.readObject();
-
-			// Interactions avec le serveur
-			while (!ie.toString().equals("end")) {
-				System.out.println("[Serveur]: " + ie);
-				if (ie.getEmplacement() >= 0)
-					ioos.writeObject(new Information("Ta gueule tu parles trop !"));
-				ie = (InfoEntrante) ioos.readObject();
-			}
-
-			// Déconnexion du client
-			System.out.println("Déconnexion.");
+				// Attente d'un message du serveur
+			Map.setupTransmission(ioos);
+			
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		} finally {
+			// Déconnexion du client
+			System.out.println("Déconnexion.");
 			ioos.close();
+		}
+	}
+	
+	public void tour() {
+		try {
+			//Tour du joueur
+			System.out.println("C'est mon tour !");
+			Thread.sleep(5000);
+			
+			//Fin du tour
+			ioos.writeObject(new Information("fin"));
+		} catch (InterruptedException | IOException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
 		}
 	}
 }

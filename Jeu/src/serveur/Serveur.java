@@ -3,11 +3,8 @@ package serveur;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
-
 import ressources.IOOStream;
 import ressources.IOOStreamLocal;
-import ressources.InfoEntrante;
 import ressources.Information;
 
 /**
@@ -24,14 +21,19 @@ public class Serveur implements Runnable {
 	 * Constructeur
 	 */
 	public Serveur(int port) {
+		sock = new LinkedList<IOOStream>();
+		
+		//Création du client local
 		IOOStreamLocal ioos = new IOOStreamLocal();
 		new ClientLocal(ioos);
 		ioos.writeObject(new Information("Connexion du client local..."));
 		System.out.println("[Client local]: " + ioos.readObject());
-		sock = new LinkedList<IOOStream>();
-		ServeurEcoute se = new ServeurEcoute(port, this.sock, nbJoueurs);
 		sock.add(ioos);
-		new Thread(se).start();
+		
+		//Lancement du serveur d'écoute pour la connexion des clients distants
+		ServeurEcoute se = new ServeurEcoute(port, this.sock, nbJoueurs);
+		
+		//Lancement du jeu
 		new Thread(this).start();
 	}
 
@@ -42,49 +44,52 @@ public class Serveur implements Runnable {
 	 *            String[]
 	 */
 	public void run() {
-		// Interactions avec les clients
-		Scanner sc = new Scanner(System.in);
-		String msg = sc.nextLine();
 		try {
-			while (!msg.equals("end")) {
-				switch (msg) {
-				case ("0"):
-					sock.get(0).writeObject(new InfoEntrante(msg, 0));
-					System.out.println("[Client]: " + sock.get(0).readObject());
-					break;
-				case ("1"):
-					sock.get(1).writeObject(new InfoEntrante(msg, 1));
-					System.out.println("[Client]: " + sock.get(1).readObject());
-					break;
-				case ("2"):
-					sock.get(2).writeObject(new InfoEntrante(msg, 2));
-					System.out.println("[Client]: " + sock.get(2).readObject());
-					break;
-				default:
-					toAll(new InfoEntrante(msg, -1));
-					break;
-				}
-				msg = sc.nextLine();
-			}
+			//Initialisation du jeu
 			
-			//Déconnexion du serveur
-			toAll(new InfoEntrante("end", -1));
-			sc.close();
-			System.out.println("Fermeture du serveur.");
-		} catch (IOException | ClassNotFoundException e) {
+			
+			// Interactions avec les clients
+			while(true) {
+				for(IOOStream j : sock) {
+					j.writeObject(new Information("tour"));
+					this.tour(j);
+					
+				}
+			}
+		} catch (Exception e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
+		finally {
+			// Déconnexion du serveur
+			System.out.println("Fermeture du serveur.");
+		}
 	}
 
-	private void toAll(InfoEntrante ie) {
+	private void broadcast(Information inf) {
 		for (IOOStream i : sock) {
 			try {
-				i.writeObject(ie);
+				i.writeObject(inf);
 			} catch (IOException e) {
 				// TODO Bloc catch généré automatiquement
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void tour(IOOStream j) {
+		try {
+			Information i = j.readObject();
+			while(!i.toString().equals("fin")) {
+				//Traitements
+				
+				
+				i = j.readObject();
+			}
+			//Fin du tour
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
 		}
 	}
 }

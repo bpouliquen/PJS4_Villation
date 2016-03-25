@@ -16,7 +16,7 @@ import ressources.Information;
  * @author Octave M., Erwan P. Geoffrey A., Tristan H., John B., Brieuc P.
  * @version 0.0.1
  */
-public class ServeurEcoute implements Runnable {
+public class ServeurEcoute {
 
 	private ServerSocket serveur;
 	private List<IOOStream> sock;
@@ -41,13 +41,14 @@ public class ServeurEcoute implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.ecouter();
 	}
 
 	/**
 	 * Procédure runnable attendant la connexion des joueurs et créant leurs
 	 * entrées et sorties
 	 */
-	public void run() {
+	public void ecouter() {
 		for (int i = this.attenteJoueurs; i > 0; i--) {
 			try {
 				System.out.println("En attente de " + i + " joueurs...");

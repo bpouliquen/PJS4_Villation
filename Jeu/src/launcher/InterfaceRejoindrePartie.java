@@ -233,8 +233,8 @@ public class InterfaceRejoindrePartie extends MovableJFrame {
 	 * @return le layout
 	 */
 	private GroupLayout joinMode() {
-		readyButton = new Button("ButtonPret.png", "ButtonPretSurvol.png", "Prêt", null);
-		readyButton.setText("Prêt");
+		readyButton = new Button("ButtonPasPret.png", "ButtonPasPretSurvol.png", "Prêt", null);
+		readyButton.setText("Pas Prêt");
 		readyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

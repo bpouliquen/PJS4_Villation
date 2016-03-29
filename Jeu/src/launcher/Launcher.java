@@ -59,7 +59,7 @@ public class Launcher extends JFrame {
 		container.add(quit);
 
 		JButton sound = new Button("Mute.png", "MuteOff.png", "Sound", this);
-		sound.setBounds(340, 539, 50, 50);
+		sound.setBounds(340, 539, 30, 30);
 		container.add(sound);
 
 		this.setContentPane(container);
@@ -116,4 +116,6 @@ public class Launcher extends JFrame {
 	public void stopMusic() {
 		music.stop();
 	}
+
+
 }

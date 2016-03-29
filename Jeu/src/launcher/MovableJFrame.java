@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /*
@@ -22,6 +23,8 @@ public class MovableJFrame extends JFrame{
 		setUndecorated(true);
 		//Empêche le redimensionnement de la fenêtre
 		setResizable(false);
+		ImageIcon icone = new ImageIcon("./ressources/images/graphic/VillationIconLarge.png");
+		this.setIconImage(icone.getImage());
 	}
 
 	private void movable() {

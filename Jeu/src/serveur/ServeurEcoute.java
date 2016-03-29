@@ -49,25 +49,26 @@ public class ServeurEcoute implements Runnable {
 	 * entrées et sorties
 	 */
 	public void run() {
-		for (int i = 1; i <= se.getNbJoueurs() - 1; i++) {
-			try {
+		try {
+			for (int i = 1; i <= se.getNbJoueurs() - 1; i++) {
 				System.out.println("En attente de " + (se.getNbJoueurs() - i) + " joueurs...");
 				Socket temp = serveur.accept();
 				IOOStreamReseau ioos = new IOOStreamReseau(temp);
 				ioos.writeObject(new Information(this.nomPartie));
 				System.out.println("[Client]: " + ioos.readObject());
-				se.getJoueurs().add(new Joueur("Joueur "+ (i+1), true));
+				se.getJoueurs().add(new Joueur("Joueur " + (i + 1), true));
 				ioos.writeObject(se.getJoueurs());
 				this.ipartie.remplirListeJoueur(se.getJoueurs());
 				se.broadcast(new Information("up"));
 				System.out.println(se.getJoueurs().get(i).getNom());
 				se.broadcast(se.getJoueurs());
 				se.getSockets().add(ioos);
-			} catch (IOException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		System.out.println("Tous joueurs connectés.");
 	}
 }

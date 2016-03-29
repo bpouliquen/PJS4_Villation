@@ -87,7 +87,7 @@ public class InterfaceRejoindreLAN extends JFrame {
 						 //Remplacer par un getter pour avoir le nom de la partie
 						//</Provsoire>
 						
-						new Client("127.0.0.1", 2000);
+						new Client(ip, Integer.parseInt(port));
 						
 						dispose();
 					}

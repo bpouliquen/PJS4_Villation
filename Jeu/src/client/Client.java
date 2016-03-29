@@ -43,6 +43,7 @@ public class Client implements Runnable {
 					ArrayList<Joueur> j = (ArrayList<Joueur>) ioos.readObject();
 					System.out.println(j.size());
 					ipartie.remplirListeJoueur(j);
+					j = new ArrayList<Joueur>();
 				}
 				msg = ((Information) ioos.readObject()).toString();
 			}

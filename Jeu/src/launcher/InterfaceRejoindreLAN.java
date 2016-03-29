@@ -8,9 +8,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
@@ -24,7 +22,7 @@ import javax.swing.JOptionPane;
 /**
  * Interface pour rejoindre une LAN
  */
-public class InterfaceRejoindreLAN extends JFrame {
+public class InterfaceRejoindreLAN extends MovableJFrame {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel, background;
@@ -36,8 +34,6 @@ public class InterfaceRejoindreLAN extends JFrame {
 		contentPanel  = new JPanel();
 		background=new BackgroundPanel("ConnexionBackground.png");
 		setTitle("Villation - Rejoindre LAN");
-		setUndecorated(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setContentPane(background);
 		setTitle("Rejoindre LAN");
 		setBounds(100, 100, 315, 80);

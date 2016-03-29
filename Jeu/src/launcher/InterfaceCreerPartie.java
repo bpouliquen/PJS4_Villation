@@ -1,8 +1,6 @@
 package launcher;
 import java.awt.Dimension;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,7 +20,7 @@ import java.awt.Color;
 /**
  * Interface de creation de partie
  */
-public class InterfaceCreerPartie extends JFrame {
+public class InterfaceCreerPartie extends MovableJFrame {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel;
@@ -37,8 +35,7 @@ public class InterfaceCreerPartie extends JFrame {
 		JPanel background=new BackgroundPanel("CréerPartieBackground.png");
 
 		setTitle("Villation - Creer une partie");
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setUndecorated(true);
+
 		setBounds(100, 100, 410, 200);
 
 		saisies();

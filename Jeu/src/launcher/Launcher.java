@@ -1,9 +1,5 @@
 package launcher;
 
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,26 +13,20 @@ import javax.sound.sampled.*;
  * Launcher du Jeu
  *
  */
-public class Launcher extends JFrame {
+public class Launcher extends MovableJFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static Clip music;
 
 	public Launcher(){
-		movableJFrame();
+		super();
 		//Définit un titre pour notre fenêtre
 		this.setTitle("Villation - Launcher");
 		//Définit sa taille : 400 pixels de large et 600 pixels de haut
 		this.setSize(400, 600);
 		//Nous demandons maintenant à notre objet de se positionner au centre
-		this.setLocationRelativeTo(null);
-		//Termine le processus lorsqu'on clique sur la croix rouge
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//Retirer les contours et les boutons de contrôle
-		this.setUndecorated(true);
-		//Empêche le redimensionnement de la fenêtre
-		this.setResizable(false);
-
+		setLocationRelativeTo(null);
+		
 		JPanel container = new BackgroundPanel ("Launcher.png"); 
 
 		container.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -66,29 +56,6 @@ public class Launcher extends JFrame {
 		//Et enfin, la rendre visible     
 		this.setVisible(true);
 		runMusic();
-	}
-
-	private void movableJFrame() {
-		Point point = new Point();
-		addMouseListener(new MouseAdapter() {
-
-			public void mousePressed(MouseEvent e) {
-
-				if(!e.isMetaDown()){
-					point.x = e.getX();
-					point.y = e.getY();
-				}
-			}
-		});
-		addMouseMotionListener(new MouseMotionAdapter() {
-			public void mouseDragged(MouseEvent e) {
-				if(!e.isMetaDown()){
-					Point p = getLocation();
-					setLocation(p.x + e.getX() - point.x,
-							p.y + e.getY() - point.y);
-				}
-			}
-		});
 	}
 
 	/**

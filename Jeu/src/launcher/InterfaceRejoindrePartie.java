@@ -5,8 +5,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
@@ -27,7 +25,7 @@ import java.util.List;
 /**
  * Interface qui s'ouvre quand on rejoint une partie où qu'on en heberge une (salon d'attente)
  */
-public class InterfaceRejoindrePartie extends JFrame {
+public class InterfaceRejoindrePartie extends MovableJFrame {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel, background;
@@ -50,8 +48,6 @@ public class InterfaceRejoindrePartie extends JFrame {
 			this.host=true;
 		}
 
-		setUndecorated(true);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 380, 170);
 		background.add(contentPanel);
 

@@ -36,6 +36,9 @@ public class ClientLocal implements Runnable {
 				}
 				msg = ((Information) ioos.readObject()).toString();
 			}
+			/*
+			 * DEMARRAGE DU JEU
+			 */
 			
 		} finally {
 			// Déconnexion du client

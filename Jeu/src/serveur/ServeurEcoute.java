@@ -60,7 +60,7 @@ public class ServeurEcoute implements Runnable {
 				ioos.writeObject(se.getJoueurs());
 				this.ipartie.remplirListeJoueur(se.getJoueurs());
 				se.broadcast(new Information("up"));
-				System.out.println(se.getJoueurs().get(i).getNom());
+				System.out.println(se.getJoueurs().size());
 				se.broadcast(se.getJoueurs());
 				se.getSockets().add(ioos);
 			}

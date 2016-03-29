@@ -22,7 +22,7 @@ public class Client implements Runnable {
 			ioos.writeObject(new Information("Connecté."));
 			@SuppressWarnings("unchecked")
 			ArrayList<Joueur> joueurs = (ArrayList<Joueur>) ioos.readObject();
-			ipartie = new InterfaceRejoindrePartie(nomPartie, null);
+			ipartie = new InterfaceRejoindrePartie(nomPartie, null, null);
 			ipartie.setLocationRelativeTo(null);
 			ipartie.remplirListeJoueur(joueurs);
 			new Thread(this).start();
@@ -31,8 +31,7 @@ public class Client implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public void run() {
 		// TODO Stub de la méthode généré automatiquement
@@ -40,13 +39,18 @@ public class Client implements Runnable {
 			String msg = ((Information) ioos.readObject()).toString();
 			while(!msg.equals("go")) {
 				if(msg.equals("up")) {
+					@SuppressWarnings("unchecked")
 					ArrayList<Joueur> j = (ArrayList<Joueur>) ioos.readObject();
 					System.out.println(j.size());
 					ipartie.remplirListeJoueur(j);
-					j = new ArrayList<Joueur>();
 				}
 				msg = ((Information) ioos.readObject()).toString();
 			}
+			System.out.println("Démarrage du jeu");
+			ipartie.dispose();
+			/*
+			 * DEMARRAGE DU JEU
+			 */
 		} catch (Exception e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();

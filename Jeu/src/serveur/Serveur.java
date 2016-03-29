@@ -18,6 +18,7 @@ public class Serveur implements Runnable {
 	private List<Joueur> joueurs;
 	private List<IOOStream> sockets;
 	private final int nbJoueurs;
+	private InterfaceRejoindrePartie ipartie;
 
 	/**
 	 * Constructeur
@@ -36,13 +37,12 @@ public class Serveur implements Runnable {
 		joueurs.add(new Joueur("Joueur 1",true));
 		sockets.add(ioos);
 		
-		InterfaceRejoindrePartie ipartie = new InterfaceRejoindrePartie(nomPartie, Integer.toString(port));
+		this.ipartie = new InterfaceRejoindrePartie(nomPartie, Integer.toString(port), this);
 		ipartie.setLocationRelativeTo(null);
 		ipartie.remplirListeJoueur(this.joueurs);
 		
 		//Lancement du serveur d'écoute pour la connexion des clients distants
 		new ServeurEcoute(port, this, ipartie, nomPartie);
-		new Thread(this).start();
 	}
 
 	public List<IOOStream> getSockets() {
@@ -65,9 +65,12 @@ public class Serveur implements Runnable {
 	 */
 	public void run() {
 		try {
-			while(true) {
-				
-			}
+			this.broadcast(new Information("go"));
+			System.out.println("Démarrage du jeu");
+			ipartie.dispose();
+			/*
+			 * DEMARRAGE DU JEU
+			 */
 		} finally {
 			// Déconnexion du serveur
 			System.out.println("Fermeture du serveur.");

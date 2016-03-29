@@ -19,6 +19,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+
+import serveur.Serveur;
+
 import java.awt.Font;
 import java.util.List;
 
@@ -37,8 +40,10 @@ public class InterfaceRejoindrePartie extends MovableJFrame {
 	@SuppressWarnings("rawtypes")
 	private JList liste;
 	Color labelColor = Color.BLACK;
+	private Serveur serveur;
 
-	public InterfaceRejoindrePartie(String nom, String port) {
+	public InterfaceRejoindrePartie(String nom, String port, Serveur se) {
+		serveur = se;
 		contentPanel = new JPanel();
 		background=new BackgroundPanel("RejoindrePartieBackground.png");
 		setTitle("Villation - Salon partie");
@@ -148,9 +153,7 @@ public class InterfaceRejoindrePartie extends MovableJFrame {
 		readyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*
-					lancerPartie(); //Lance le jeu
-				}*/
+				new Thread(serveur).start();
 			}
 		});
 		

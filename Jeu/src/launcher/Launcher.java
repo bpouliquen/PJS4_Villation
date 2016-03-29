@@ -116,6 +116,4 @@ public class Launcher extends JFrame {
 	public void stopMusic() {
 		music.stop();
 	}
-
-
 }

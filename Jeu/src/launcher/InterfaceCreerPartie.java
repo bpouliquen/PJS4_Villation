@@ -109,10 +109,8 @@ public class InterfaceCreerPartie extends JFrame {
 				else {
 					//Note : Appeler classe pour enregistrer les parametres de la partie, exemple : 
 					//enregistrerPartie(nomPartie, port, mdp, nbJoueurs, lan);
-					//new Serveur(2000);
-					
-					new InterfaceRejoindrePartie(nomPartie, port).setLocationRelativeTo(null);
 					dispose();
+					new Serveur(2000, Integer.parseInt(nbJoueurs), nomPartie);
 				}
 			}
 		});

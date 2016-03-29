@@ -23,6 +23,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.util.List;
 
 /**
  * Interface qui s'ouvre quand on rejoint une partie où qu'on en heberge une (salon d'attente)
@@ -64,8 +65,8 @@ public class InterfaceRejoindrePartie extends JFrame {
 		else {
 			gl_contentPanel = hostMode();
 		}
-		remplirListeJoueur();
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		//remplirListeJoueur(new ArrayList<Joueur>());
+		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		readyButton.setPreferredSize(new Dimension(85, 25));
 
@@ -112,13 +113,7 @@ public class InterfaceRejoindrePartie extends JFrame {
 	 * A appeler à chaque changement dans la liste des joueurs et active le bouton lancer ou non
 	 */
 	@SuppressWarnings("unchecked")
-	private void remplirListeJoueur(/*ArrayList listeJoueur*/) { //On recup la liste des joueurs depuis le serveur ?
-
-		//<Provisoire>
-		ArrayList<Joueur> listeJoueur = new ArrayList<Joueur>();
-		listeJoueur.add(new Joueur("Joueur 1", true));
-		listeJoueur.add(new Joueur("Joueur 2", true));
-		//</Provisoire>
+	public void remplirListeJoueur(List<Joueur> listeJoueur) { //On recup la liste des joueurs depuis le serveur ?
 		
 		@SuppressWarnings("rawtypes")
 		JList liste = new JList(listeJoueur.toArray());
@@ -178,7 +173,7 @@ public class InterfaceRejoindrePartie extends JFrame {
 			}
 		});
 
-		remplirListeJoueur();
+		remplirListeJoueur(new ArrayList<Joueur>());
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		JLabel IPLabel = new JLabel("Votre IP :");
@@ -269,7 +264,7 @@ public class InterfaceRejoindrePartie extends JFrame {
 			}
 		});
 
-		remplirListeJoueur();
+		remplirListeJoueur(new ArrayList<Joueur>());
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		GroupLayout join_contentPanel = new GroupLayout(contentPanel);

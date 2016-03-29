@@ -1,9 +1,10 @@
 package serveur;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import ressources.IOOStream;
+
+import launcher.*;
 import ressources.IOOStreamLocal;
 import ressources.Information;
 
@@ -14,24 +15,30 @@ import ressources.Information;
  * @version 0.0.1
  */
 public class Serveur implements Runnable {
-	private List<IOOStream> sock;
-	private final int nbJoueurs = 2;
+	private List<Joueur> joueurs;
+	private final int nbJoueurs;
 
 	/**
 	 * Constructeur
 	 */
-	public Serveur(int port) {
-		sock = new LinkedList<IOOStream>();
+	public Serveur(int port, int nbJoueurs, String nomPartie) {
+		joueurs = new ArrayList<Joueur>();
+		this.nbJoueurs = nbJoueurs;
 		
 		//Création du client local
+		
 		IOOStreamLocal ioos = new IOOStreamLocal();
 		new ClientLocal(ioos);
 		ioos.writeObject(new Information("Connexion du client local..."));
 		System.out.println("[Client local]: " + ioos.readObject());
-		sock.add(ioos);
+		joueurs.add(new Joueur("Joueur 1", ioos, false));
+		
+		InterfaceRejoindrePartie ipartie = new InterfaceRejoindrePartie(nomPartie, Integer.toString(port));
+		ipartie.setLocationRelativeTo(null);
+		ipartie.remplirListeJoueur(this.joueurs);
 		
 		//Lancement du serveur d'écoute pour la connexion des clients distants
-		ServeurEcoute se = new ServeurEcoute(port, this.sock, nbJoueurs);
+		new ServeurEcoute(port, this.joueurs, this.nbJoueurs - 1, ipartie, nomPartie);
 		
 		//Lancement du jeu
 		new Thread(this).start();
@@ -50,8 +57,8 @@ public class Serveur implements Runnable {
 			
 			// Interactions avec les clients
 			while(true) {
-				for(IOOStream j : sock) {
-					j.writeObject(new Information("tour"));
+				for(Joueur j : joueurs) {
+					j.getSocket().writeObject(new Information("tour"));
 					this.tour(j);
 					
 				}
@@ -67,9 +74,9 @@ public class Serveur implements Runnable {
 	}
 
 	private void broadcast(Information inf) {
-		for (IOOStream i : sock) {
+		for (Joueur j : joueurs) {
 			try {
-				i.writeObject(inf);
+				j.getSocket().writeObject(inf);
 			} catch (IOException e) {
 				// TODO Bloc catch généré automatiquement
 				e.printStackTrace();
@@ -77,14 +84,14 @@ public class Serveur implements Runnable {
 		}
 	}
 	
-	public void tour(IOOStream j) {
+	public void tour(Joueur j) {
 		try {
-			Information i = j.readObject();
+			Information i = j.getSocket().readObject();
 			while(!i.toString().equals("fin")) {
 				//Traitements
 				
 				
-				i = j.readObject();
+				i = j.getSocket().readObject();
 			}
 			//Fin du tour
 		} catch (ClassNotFoundException | IOException e) {

@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 
+import launcher.InterfaceRejoindrePartie;
+import launcher.Joueur;
 import ressources.IOOStream;
 import ressources.IOOStreamReseau;
 import ressources.Information;
@@ -19,8 +21,10 @@ import ressources.Information;
 public class ServeurEcoute {
 
 	private ServerSocket serveur;
-	private List<IOOStream> sock;
+	private List<Joueur> joueurs;
 	private int attenteJoueurs;
+	private InterfaceRejoindrePartie ipartie;
+	private String nomPartie;
 
 	/**
 	 * Constructeur
@@ -32,9 +36,11 @@ public class ServeurEcoute {
 	 * @param nbJoueurs
 	 *            int
 	 */
-	public ServeurEcoute(int port, List<IOOStream> sock, int nbJoueurs) {
-		this.sock = sock;
+	public ServeurEcoute(int port, List<Joueur> joueurs, int nbJoueurs, InterfaceRejoindrePartie ipartie, String nomPartie) {
+		this.joueurs = joueurs;
 		this.attenteJoueurs = nbJoueurs;
+		this.ipartie = ipartie;
+		this.nomPartie = nomPartie;
 		try {
 			serveur = new ServerSocket(port);
 		} catch (IOException e) {
@@ -49,14 +55,16 @@ public class ServeurEcoute {
 	 * entrées et sorties
 	 */
 	public void ecouter() {
-		for (int i = this.attenteJoueurs; i > 0; i--) {
+		for (int i = 1; i <= this.attenteJoueurs; i++) {
 			try {
 				System.out.println("En attente de " + i + " joueurs...");
 				Socket temp = serveur.accept();
 				IOOStreamReseau ioos = new IOOStreamReseau(temp);
-				ioos.writeObject(new Information("Connecté au serveur."));
+				ioos.writeObject(new Information(this.nomPartie));
 				System.out.println("[Client]: " + ioos.readObject());
-				sock.add(ioos);
+				joueurs.add(new Joueur("Joueur "+ (i+1), ioos, false));
+				this.ipartie.remplirListeJoueur(this.joueurs);
+				
 
 			} catch (IOException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block

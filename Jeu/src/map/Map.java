@@ -178,7 +178,6 @@ public final class Map {
 				Map.commande(commande);
 			}
 		}
-		
 	}
 	
 	public static void monTour(){

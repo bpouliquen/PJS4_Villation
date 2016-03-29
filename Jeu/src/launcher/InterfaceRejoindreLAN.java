@@ -84,12 +84,11 @@ public class InterfaceRejoindreLAN extends JFrame {
 
 					if(checkPartie){
 						//<Provsoire>
-						String nomPartie="Hello team"; //Remplacer par un getter pour avoir le nom de la partie
+						 //Remplacer par un getter pour avoir le nom de la partie
 						//</Provsoire>
 						
-						//new Client("127.0.0.1", 2000);
+						new Client("127.0.0.1", 2000);
 						
-						new InterfaceRejoindrePartie(nomPartie, null).setLocationRelativeTo(null);
 						dispose();
 					}
 					else {

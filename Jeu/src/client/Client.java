@@ -3,6 +3,7 @@ package client;
 import java.io.IOException;
 import java.net.Socket;
 
+import launcher.InterfaceRejoindrePartie;
 import map.Map;
 import ressources.IOOStreamReseau;
 import ressources.Information;
@@ -28,7 +29,9 @@ public class Client implements Runnable {
 	public void run() {
 		// TODO Stub de la méthode généré automatiquement
 		try {
-			System.out.println(ioos.readObject());
+			String nomPartie = ioos.readObject().toString();
+			InterfaceRejoindrePartie ipartie = new InterfaceRejoindrePartie(nomPartie, null);
+			ipartie.setLocationRelativeTo(null);
 			ioos.writeObject(new Information("Connecté."));
 
 				// Attente d'un message du serveur

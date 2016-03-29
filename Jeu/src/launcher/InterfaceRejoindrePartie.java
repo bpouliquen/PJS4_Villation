@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.DefaultListCellRenderer;
@@ -37,27 +36,29 @@ public class InterfaceRejoindrePartie extends JFrame {
 	private JScrollPane scroll;
 	private JButton readyButton, cancelButton;
 	private String port;
+	@SuppressWarnings("rawtypes")
+	private JList liste;
 	Color labelColor = Color.BLACK;
-	
+
 	public InterfaceRejoindrePartie(String nom, String port) {
 		contentPanel = new JPanel();
 		background=new BackgroundPanel("RejoindrePartieBackground.png");
 		setTitle("Villation - Salon partie");
-		
+
 		if(port!=null){
 			this.port=port;
 			this.host=true;
 		}
-		
+
 		setUndecorated(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 380, 170);
 		background.add(contentPanel);
 
 		info(nom);
-			
+
 		boutons();
-		
+
 		GroupLayout gl_contentPanel;
 		if(!host){
 			gl_contentPanel = joinMode();
@@ -65,9 +66,7 @@ public class InterfaceRejoindrePartie extends JFrame {
 		else {
 			gl_contentPanel = hostMode();
 		}
-		//remplirListeJoueur(new ArrayList<Joueur>());
-		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
+
 		readyButton.setPreferredSize(new Dimension(85, 25));
 
 		JLabel lblListeJoueurs = new JLabel("Liste Joueurs");
@@ -83,15 +82,9 @@ public class InterfaceRejoindrePartie extends JFrame {
 	private void info(String nom) {
 		partieNameLabel = new JLabel(nom);
 		partieNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		partieNameLabel.setForeground(labelColor );
 		partieNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		String ip = "";
-		try {
-			ip= InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e1) {
-			e1.printStackTrace();
-		}		
 	}
 
 	/**
@@ -100,24 +93,23 @@ public class InterfaceRejoindrePartie extends JFrame {
 	public void boutons(){
 		cancelButton = new Button("ButtonAnnuler.png", "ButtonAnnulerSurvol.png", "Annuler", null); 
 		cancelButton.setPreferredSize(new Dimension(85, 25));
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new Launcher();
-			}
-		});
 	}
-	
+
+	@SuppressWarnings("rawtypes")
+	private void initJlist() {
+		liste = new JList();
+		scroll = new JScrollPane(liste);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	}
+
 	/**
 	 * A appeler à chaque changement dans la liste des joueurs et active le bouton lancer ou non
 	 */
 	@SuppressWarnings("unchecked")
 	public void remplirListeJoueur(List<Joueur> listeJoueur) { //On recup la liste des joueurs depuis le serveur ?
-		
-		@SuppressWarnings("rawtypes")
-		JList liste = new JList(listeJoueur.toArray());
-		
+
+		liste.setListData(listeJoueur.toArray());
+
 		liste.setCellRenderer(new DefaultListCellRenderer() {
 			private static final long serialVersionUID = 1L;
 			/**
@@ -137,14 +129,8 @@ public class InterfaceRejoindrePartie extends JFrame {
 				return this;
 			}
 		});
-		//liste.getCellRenderer()).setOpaque(false);
-		//liste.setOpaque(false);
-        //liste.setBackground(new Color(0, 0, 0, 0));
-		scroll = new JScrollPane(liste);
-		//scroll.setOpaque(false);
-        //scroll.getViewport().setOpaque(false);
 		/*
-		 * On verifier si tout le monde est prêt pour activer le bouton lancer
+		 * On verifie si tout le monde est prêt pour activer le bouton lancer
 		 */
 		if(host){
 			readyButton.setEnabled(true);
@@ -153,8 +139,7 @@ public class InterfaceRejoindrePartie extends JFrame {
 					readyButton.setEnabled(false);
 				}
 			}
-		}
-		repaint();
+		}		
 	}
 
 	/**
@@ -172,10 +157,17 @@ public class InterfaceRejoindrePartie extends JFrame {
 				}*/
 			}
 		});
+		
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Launcher();
+			}
+		});
 
-		remplirListeJoueur(new ArrayList<Joueur>());
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
+		initJlist();
+		
 		JLabel IPLabel = new JLabel("Votre IP :");
 		IPLabel.setForeground(labelColor);
 		String ip = "";
@@ -263,9 +255,16 @@ public class InterfaceRejoindrePartie extends JFrame {
 				}
 			}
 		});
+		
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Launcher();
+			}
+		});
 
-		remplirListeJoueur(new ArrayList<Joueur>());
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		initJlist();
 
 		GroupLayout join_contentPanel = new GroupLayout(contentPanel);
 		join_contentPanel.setHorizontalGroup(

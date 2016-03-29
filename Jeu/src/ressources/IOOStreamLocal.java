@@ -9,16 +9,16 @@ import java.util.LinkedList;
  * @version 0.0.1
  */
 public class IOOStreamLocal implements IOOStream {
-
-	private LinkedList<Information> listeEcriture;
-	private LinkedList<Information> listeLecture;
+	private static final long serialVersionUID = 1L;
+	private LinkedList<Object> listeEcriture;
+	private LinkedList<Object> listeLecture;
 
 	/**
 	 * Constructeur par défaut
 	 */
 	public IOOStreamLocal() {
-		listeEcriture=new LinkedList<Information>();
-		listeLecture=new LinkedList<Information>();
+		listeEcriture=new LinkedList<Object>();
+		listeLecture=new LinkedList<Object>();
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class IOOStreamLocal implements IOOStream {
 	 * Accesseur de l'attribut listeLecture
 	 * @return
 	 */
-	protected LinkedList<Information> getListeLec(){
+	protected LinkedList<Object> getListeLec(){
 		return this.listeLecture;
 	}
 	
@@ -42,12 +42,12 @@ public class IOOStreamLocal implements IOOStream {
 	 * Accesseur de l'attribut listeEcriture
 	 * @return
 	 */
-	protected LinkedList<Information> getListeEc(){
+	protected LinkedList<Object> getListeEc(){
 		return this.listeEcriture;
 	}
 	
 	@Override
-	public void writeObject(Information paquet) {
+	public void writeObject(Object paquet) {
 		// TODO Auto-generated method stub
 		synchronized(listeEcriture){
 			listeEcriture.add(paquet);
@@ -56,7 +56,7 @@ public class IOOStreamLocal implements IOOStream {
 	}
 
 	@Override
-	public Information readObject() {
+	public Object readObject() {
 		// TODO Auto-generated method stub
 		synchronized (listeLecture){
 			while(listeLecture.isEmpty()){

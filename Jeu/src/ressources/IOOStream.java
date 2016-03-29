@@ -1,6 +1,7 @@
 package ressources;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Interface d'un bloc entrées/sorties pour un socket
@@ -9,7 +10,7 @@ import java.io.IOException;
  * @version 0.0.1
  */
 public interface IOOStream {
-
+	
 	/**
 	 * Procédure envoyant un paquet
 	 * 
@@ -17,7 +18,7 @@ public interface IOOStream {
 	 *            Information
 	 * @throws IOException e
 	 */
-	public abstract void writeObject(Information paquet) throws IOException;
+	public abstract void writeObject(Object paquet) throws IOException;
 
 	/**
 	 * Procédure réceptionnant un paquet
@@ -26,7 +27,7 @@ public interface IOOStream {
 	 * @throws ClassNotFoundException e1
 	 * @throws IOException e2
 	 */
-	public abstract Information readObject() throws ClassNotFoundException, IOException;
+	public abstract Object readObject() throws ClassNotFoundException, IOException;
 
 	/**
 	 * Procédure terminant la connexion

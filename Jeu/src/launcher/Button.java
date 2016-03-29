@@ -74,7 +74,7 @@ public class Button extends JButton implements MouseListener{
 			fen.fermer();
 			break;
 		case "Rejoindre":
-			String[] choix = {"En Ligne", "LAN", "Annuler"};
+			/*String[] choix = {"En Ligne", "LAN", "Annuler"};
 			new JOptionPane();
 			int option = JOptionPane.showOptionDialog(null, 
 					"Quel type de partie voulez-vous rejoindre ?",
@@ -83,10 +83,10 @@ public class Button extends JButton implements MouseListener{
 				//Appeler la fonction pour rejoindre un partie en ligne
 				fen.fermer();
 			}
-			else if (option == JOptionPane.NO_OPTION){
+			else if (option == JOptionPane.NO_OPTION){*/
 				new InterfaceRejoindreLAN().setLocationRelativeTo(null);
 				fen.fermer();
-			}
+			//}
 			break;
 		case "Propos":
 			JOptionPane.showMessageDialog(null, "Projet de PJS4", "A propos", JOptionPane.INFORMATION_MESSAGE);

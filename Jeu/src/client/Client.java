@@ -2,15 +2,15 @@ package client;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
-import launcher.InterfaceRejoindrePartie;
-import map.Map;
-import ressources.IOOStreamReseau;
-import ressources.Information;
+import launcher.*;
+import ressources.*;
 
 public class Client implements Runnable {
 
 	private IOOStreamReseau ioos;
+	private InterfaceRejoindrePartie ipartie;
 
 	public Client(String adr, int port) {
 		System.out.println("Tentative de connexion au serveur...");
@@ -18,26 +18,35 @@ public class Client implements Runnable {
 			Socket s = new Socket(adr, port);
 			this.ioos = new IOOStreamReseau(s);
 			System.out.println("Connexion établie.");
+			String nomPartie = ioos.readObject().toString();
+			ioos.writeObject(new Information("Connecté."));
+			@SuppressWarnings("unchecked")
+			ArrayList<Joueur> joueurs = (ArrayList<Joueur>) ioos.readObject();
+			ipartie = new InterfaceRejoindrePartie(nomPartie, null);
+			ipartie.setLocationRelativeTo(null);
+			ipartie.remplirListeJoueur(joueurs);
 			new Thread(this).start();
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		// TODO Stub de la méthode généré automatiquement
 		try {
-			String nomPartie = ioos.readObject().toString();
-			InterfaceRejoindrePartie ipartie = new InterfaceRejoindrePartie(nomPartie, null);
-			ipartie.setLocationRelativeTo(null);
-			ioos.writeObject(new Information("Connecté."));
-
-				// Attente d'un message du serveur
-			Map.setupTransmission(ioos);
-			
-		} catch (ClassNotFoundException | IOException e) {
+			String msg = ((Information) ioos.readObject()).toString();
+			while(!msg.equals("go")) {
+				if(msg.equals("up")) {
+					ArrayList<Joueur> j = (ArrayList<Joueur>) ioos.readObject();
+					System.out.println(j.size());
+					ipartie.remplirListeJoueur(j);
+				}
+				msg = ((Information) ioos.readObject()).toString();
+			}
+		} catch (Exception e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		} finally {

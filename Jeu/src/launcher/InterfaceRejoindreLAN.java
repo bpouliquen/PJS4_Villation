@@ -132,6 +132,7 @@ public class InterfaceRejoindreLAN extends JFrame {
 		}
 		contentPanel.add(IPtextField);
 		IPtextField.setColumns(10);
+		IPtextField.setText("127.000.000.001");
 		//IPtextField.addKeyListener(new KeyAdapterNombre());
 
 		JLabel PortLabel = new JLabel("Port :");
@@ -142,5 +143,6 @@ public class InterfaceRejoindreLAN extends JFrame {
 		contentPanel.add(PorttextField);
 		PorttextField.setColumns(5);
 		PorttextField.addKeyListener(new ControleSaisieNombre());
+		PorttextField.setText("2000");
 	}
 }

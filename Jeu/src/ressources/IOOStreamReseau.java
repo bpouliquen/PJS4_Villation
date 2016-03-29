@@ -12,6 +12,7 @@ import java.net.Socket;
  * @version 0.0.1
  */
 public class IOOStreamReseau implements IOOStream {
+	private static final long serialVersionUID = 1L;
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
 
@@ -32,13 +33,13 @@ public class IOOStreamReseau implements IOOStream {
 	}
 
 	@Override
-	public void writeObject(Information paquet) throws IOException {
+	public void writeObject(Object paquet) throws IOException {
 		oos.writeObject(paquet);
 	}
 
 	@Override
-	public Information readObject() throws ClassNotFoundException, IOException {
-		Information temp = (Information) ois.readObject();
+	public Object readObject() throws ClassNotFoundException, IOException {
+		Object temp = ois.readObject();
 		return temp;
 	}
 

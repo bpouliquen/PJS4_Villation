@@ -1,5 +1,7 @@
 package launcher;
 
+import java.io.Serializable;
+
 import ressources.IOOStream;
 
 /**
@@ -7,15 +9,14 @@ import ressources.IOOStream;
  * @author Erwan
  *
  */
-public class Joueur {
+public class Joueur implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String nom;
 	private boolean pret;
-	private IOOStream socket;
 	
-	public Joueur(String nom, IOOStream socket, boolean pret){
+	public Joueur(String nom, boolean pret){
 		this.nom=nom;
 		this.pret=pret;
-		this.socket=socket;
 	}
 
 	public String getNom() {
@@ -28,10 +29,6 @@ public class Joueur {
 
 	public void setPret(boolean pret) {
 		this.pret = pret;
-	}
-	
-	public IOOStream getSocket() {
-		return socket;
 	}
 
 	@Override

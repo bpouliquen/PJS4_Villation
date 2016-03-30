@@ -108,7 +108,7 @@ public class InterfaceRejoindrePartie extends MovableJFrame {
 	 * bouton lancer ou non
 	 */
 	@SuppressWarnings("unchecked")
-	public void remplirListeJoueur(List<Joueur> listeJoueur) { // On recup la
+	public void remplirListeJoueur(final List<Joueur> listeJoueur) { // On recup la
 																// liste des
 																// joueurs
 																// depuis le

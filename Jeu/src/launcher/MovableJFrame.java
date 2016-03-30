@@ -28,7 +28,7 @@ public class MovableJFrame extends JFrame{
 	}
 
 	private void movable() {
-		Point point = new Point();
+		final Point point = new Point();
 		addMouseListener(new MouseAdapter() {
 
 			public void mousePressed(MouseEvent e) {

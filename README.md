@@ -1,10 +1,3 @@
 # PJS4_Villation
 IUT Informatique Paris Descartes - Groupe 206
 Projet PJS4 - Villation
-Groupe :
-  Octave MONVOISIN
-  Tristan HONTABAT
-  Erwan PETITBOULANGER--MELEUX
-  Geoffrey ABRIVARD
-  John BENAVIDES
-  Brieuc POULIQUEN
